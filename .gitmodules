@@ -1,0 +1,3 @@
+[submodule "russian_speech_denoiser"]
+	path = russian_speech_denoiser
+	url = https://github.com/dariadiatlova/russian_speech_denoiser
