@@ -18,6 +18,7 @@ DNS_48_URL = ROOT + "dns48-11decc9d8e3f0998.th"
 DNS_64_URL = ROOT + "dns64-a7761ff99a7d5bb6.th"
 MASTER_64_URL = ROOT + "master64-8a5dfb4bb92753dd.th"
 VALENTINI_NC = ROOT + 'valentini_nc-93fc4337.th'  # Non causal Demucs on Valentini
+MODEL_PATH_FROM_LOCAL = "/home/dadyatlova_1/russian_speech_denoiser/denoiser/from_local/dns64-a7761ff99a7d5bb6.th"
 
 
 def _demucs(pretrained, url, **kwargs):
@@ -26,6 +27,16 @@ def _demucs(pretrained, url, **kwargs):
         state_dict = torch.hub.load_state_dict_from_url(url, map_location='cpu')
         model.load_state_dict(state_dict)
     return model
+
+
+def _from_local(pretrained_model_path, hidden):
+    model = Demucs(hidden=hidden, sample_rate=16_000)
+    model.load_state_dict(torch.load(pretrained_model_path, map_location='cpu'))
+    return model
+
+
+def dns_64_load_from_local(pretrained_model_path=MODEL_PATH_FROM_LOCAL):
+    return _from_local(pretrained_model_path, hidden=64)
 
 
 def dns48(pretrained=True):
@@ -70,6 +81,9 @@ def get_model(args):
             model = deserialize_model(pkg['model'])
         else:
             model = deserialize_model(pkg)
+    elif args.load_from_local:
+        logger.info(f"Loading pre-trained model from {args.pretrained_model_path}")
+        model = dns_from_local(args.pretrained_model_path)
     elif args.dns64:
         logger.info("Loading pre-trained real time H=64 model trained on DNS.")
         model = dns64()

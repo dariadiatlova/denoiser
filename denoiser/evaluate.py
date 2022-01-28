@@ -44,6 +44,7 @@ def evaluate(args, model=None, data_loader=None):
     if not model:
         model = pretrained.get_model(args).to(args.device)
     model.eval()
+    model.to(args.device)
 
     # Load data
     if data_loader is None:

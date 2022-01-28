@@ -64,8 +64,9 @@ def get_estimate(model, noisy, args):
                 streamer.flush()], dim=1)[None]
     else:
         with torch.no_grad():
-            estimate = model(noisy)
-            estimate = (1 - args.dry) * estimate + args.dry * noisy
+            model.to(args.device)
+            estimate = model(noisy.to(args.device))
+            estimate = (1 - args.dry) * estimate.cpu() + args.dry * noisy.cpu()
     return estimate
 
 
@@ -112,6 +113,7 @@ def enhance(args, model=None, local_out_dir=None):
     if not model:
         model = pretrained.get_model(args).to(args.device)
     model.eval()
+    model.to(args.device)
     if local_out_dir:
         out_dir = local_out_dir
     else:
