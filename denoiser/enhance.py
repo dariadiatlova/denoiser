@@ -31,7 +31,7 @@ def add_flags(parser):
     pretrained.add_model_flags(parser)
     parser.add_argument('--device', default="cpu")
     parser.add_argument('--dry', type=float, default=0,
-                        help='dry/wet knob coefficient. 0 is only input signal, 1 only denoised.')
+                        help='dry/wet knob coefficient. 0 is only denoised, 1 only input signal.')
     parser.add_argument('--num_workers', type=int, default=10)
     parser.add_argument('--streaming', action="store_true",
                         help="true streaming evaluation for Demucs")
@@ -64,9 +64,8 @@ def get_estimate(model, noisy, args):
                 streamer.flush()], dim=1)[None]
     else:
         with torch.no_grad():
-            model.to(args.device)
-            estimate = model(noisy.to(args.device))
-            estimate = (1 - args.dry) * estimate.cpu() + args.dry * noisy.cpu()
+            estimate = model(noisy)
+            estimate = (1 - args.dry) * estimate + args.dry * noisy
     return estimate
 
 
@@ -113,7 +112,6 @@ def enhance(args, model=None, local_out_dir=None):
     if not model:
         model = pretrained.get_model(args).to(args.device)
     model.eval()
-    model.to(args.device)
     if local_out_dir:
         out_dir = local_out_dir
     else:

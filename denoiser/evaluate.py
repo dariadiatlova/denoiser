@@ -44,7 +44,6 @@ def evaluate(args, model=None, data_loader=None):
     if not model:
         model = pretrained.get_model(args).to(args.device)
     model.eval()
-    model.to(args.device)
 
     # Load data
     if data_loader is None:
@@ -67,7 +66,7 @@ def evaluate(args, model=None, data_loader=None):
                     estimate = estimate.cpu()
                     clean = clean.cpu()
                     pendings.append(
-                        pool.submit(_run_metrics, clean, estimate, args))
+                        pool.submit(_run_metrics, clean, estimate, args, model.sample_rate))
                 total_cnt += clean.shape[0]
 
         for pending in LogProgress(logger, pendings, updates, name="Eval metrics"):
@@ -86,7 +85,7 @@ def _estimate_and_run_metrics(clean, model, noisy, args):
     return _run_metrics(clean, estimate, args, sr=model.sample_rate)
 
 
-def _run_metrics(clean, estimate, args, sr: int = 16_000):
+def _run_metrics(clean, estimate, args, sr):
     estimate = estimate.numpy()[:, 0]
     clean = clean.numpy()[:, 0]
     if args.pesq:
