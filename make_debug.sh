@@ -10,10 +10,10 @@ path=egs/debug/april_100
 if [[ ! -e $path ]]; then
     mkdir -p $path
 fi
-python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/noisy_train > $path/noisy_train.json
-python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/noisy_val > $path/noisy_val.json
-python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/noisy_test > $path/noisy_test.json
+python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/noisy_train > $path/train/noisy.json
+python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/noisy_val > $path/val/noisy.json
+python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/noisy_test > $path/test/noisy.json
 
-python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/clean_train > $path/clean_train.json
-python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/clean_val > $path/clean_val.json
-python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/clean_test > $path/clean_test.json
+python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/clean_train > $path/train/clean.json
+python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/clean_val > $path/val/clean.json
+python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/clean_test > $path/test/clean.json
