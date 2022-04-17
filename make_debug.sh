@@ -10,6 +10,9 @@ path=egs/debug/april_100
 if [[ ! -e $path ]]; then
     mkdir -p $path
 fi
+
+mkdir -p $path/train $path/val $path/test
+
 python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/noisy_train > $path/train/noisy.json
 python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/noisy_val > $path/val/noisy.json
 python3 -m denoiser.audio /home/dadyatlova_1/dataset/main/data_100_hours/noisy_test > $path/test/noisy.json
