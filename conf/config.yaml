@@ -19,7 +19,7 @@ revecho: 0  # add reverb like augment
 # Logging and printing, and does not impact training
 num_prints: 5
 device: cuda
-num_workers: 5
+num_workers: 4
 verbose: 0
 show: 0   # just show the model and its size and exit
 
@@ -29,12 +29,12 @@ continue_from: '' # Path the a checkpoint.th file to start from.
                   # this is not used in the name of the experiment!
                   # so use a dummy=something not to mixup experiments.
 continue_best: false  # continue from best, not last state if continue_from is set.
-continue_pretrained: dns_64_load_from_local  # use either dns48, dns64 or master64 to fine tune from pretrained-model
+continue_pretrained: dns48  # use either dns48, dns64 or master64 to fine tune from pretrained-model
 restart: false # Ignore existing checkpoints
 checkpoint_file: checkpoint.th
-best_file: best_jan21.th  # will contain only best model at any point
-history_file: history_jan21.json
-samples_dir: samples_jan21
+best_file: best_model_100h.th  # will contain only best model at any point
+history_file: history_100h.json
+samples_dir: samples_100h_april
 save_again: false  # if true, only load checkpoint and save again, useful to reexport best.th
 
 # Other stuff
@@ -52,7 +52,7 @@ optim: adam
 lr: 3e-4
 beta2: 0.999
 loss: l1
-stft_loss: False
+stft_loss: True
 stft_sc_factor: .5
 stft_mag_factor: .5
 epochs: 100
@@ -88,7 +88,7 @@ world_size:
 # Hydra config
 hydra:
   run:
-    dir: ./outputs/exp_jan21${hydra.job.override_dirname}
+    dir: ./outputs/april_100${hydra.job.override_dirname}
   job:
     config:
       # configuration for the ${hydra.job.override_dirname} runtime variable
