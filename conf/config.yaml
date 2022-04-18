@@ -30,7 +30,7 @@ continue_from: /home/dadyatlova_1/russian_speech_denoiser/denoiser/from_local/dn
                   # this is not used in the name of the experiment!
                   # so use a dummy=something not to mixup experiments.
 continue_best: false  # continue from best, not last state if continue_from is set.
-continue_pretrained:  # use either dns48, dns64 or master64 to fine tune from pretrained-model
+continue_pretrained: load_from_local  # use either dns48, dns64 or master64 to fine tune from pretrained-model
 restart: false # Ignore existing checkpoints
 checkpoint_file: /home/dadyatlova_1/russian_speech_denoiser/denoiser/from_local/dns48-11decc9d8e3f0998.th
 best_file: best_model_100h.th  # will contain only best model at any point

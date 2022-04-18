@@ -36,8 +36,12 @@ def _from_local(pretrained_model_path, hidden):
     return model
 
 
-def dns_64_load_from_local(pretrained_model_path=MODEL_PATH_FROM_LOCAL):
-    return _from_local(pretrained_model_path, hidden=64)
+def load_from_local(hidden=48):
+    if hidden == 48:
+        model_path = MODEL_PATH_FROM_LOCAL48
+    else:
+        model_path = MODEL_PATH_FROM_LOCAL64
+    return _from_local(model_path, hidden)
 
 
 def dns48(pretrained=True):
@@ -82,9 +86,6 @@ def get_model(args):
             model = deserialize_model(pkg['model'])
         else:
             model = deserialize_model(pkg)
-    elif args.load_from_local:
-        logger.info(f"Loading pre-trained model from {args.pretrained_model_path}")
-        model = dns_from_local(args.pretrained_model_path)
     elif args.dns64:
         logger.info("Loading pre-trained real time H=64 model trained on DNS.")
         model = dns64()
