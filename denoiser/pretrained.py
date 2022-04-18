@@ -86,6 +86,9 @@ def get_model(args):
             model = deserialize_model(pkg['model'])
         else:
             model = deserialize_model(pkg)
+    elif args.load_from_local:
+        logger.info("Loading pre-trained model from local time H=48 model trained on DNS.")
+        model = load_from_local()
     elif args.dns64:
         logger.info("Loading pre-trained real time H=64 model trained on DNS.")
         model = dns64()
