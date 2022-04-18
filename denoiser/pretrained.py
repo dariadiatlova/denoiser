@@ -18,7 +18,8 @@ DNS_48_URL = ROOT + "dns48-11decc9d8e3f0998.th"
 DNS_64_URL = ROOT + "dns64-a7761ff99a7d5bb6.th"
 MASTER_64_URL = ROOT + "master64-8a5dfb4bb92753dd.th"
 VALENTINI_NC = ROOT + 'valentini_nc-93fc4337.th'  # Non causal Demucs on Valentini
-MODEL_PATH_FROM_LOCAL = "/home/dadyatlova_1/russian_speech_denoiser/denoiser/from_local/dns64-a7761ff99a7d5bb6.th"
+MODEL_PATH_FROM_LOCAL64 = "/home/dadyatlova_1/russian_speech_denoiser/denoiser/from_local/dns64-a7761ff99a7d5bb6.th"
+MODEL_PATH_FROM_LOCAL48 = "/home/dadyatlova_1/russian_speech_denoiser/denoiser/from_local/dns48-11decc9d8e3f0998.th"
 
 
 def _demucs(pretrained, url, **kwargs):
