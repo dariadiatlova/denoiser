@@ -108,12 +108,16 @@ class Solver(object):
             if load_best:
                 self.model.load_state_dict(package['best_state'])
             else:
-                self.model.load_state_dict(package['model']['state'])
-            if 'optimizer' in package and not load_best:
-                self.optimizer.load_state_dict(package['optimizer'])
-            if keep_history:
-                self.history = package['history']
-            self.best_state = package['best_state']
+                # self.model.load_state_dict(package['model']['state'])
+                self.model.load_state_dict(package)
+            try:
+                if 'optimizer' in package and not load_best:
+                        self.optimizer.load_state_dict(package['optimizer'])
+                if keep_history:
+                    self.history = package['history']
+                self.best_state = package['best_state']
+            except KeyError:
+                print("Couldn't load optimizer, history and best state from checkpoint")
         continue_pretrained = self.args.continue_pretrained
         if continue_pretrained:
             logger.info("Fine tuning from pre-trained model %s", continue_pretrained)
