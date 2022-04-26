@@ -11,10 +11,10 @@ pad: true   # if training sample is too short, pad it
 
 # Dataset Augmentation
 remix: false   # remix noise and clean
-bandmask: 0.   # drop at most this fraction of freqs in mel scale
-shift: 0    # random shift, number of samples
+bandmask: 0.2   # drop at most this fraction of freqs in mel scale
+shift: 16000    # random shift, number of samples
 shift_same: false   # shift noise and clean by the same amount
-revecho: 0  # add reverb like augment
+revecho: 0.  # add reverb like augment
 
 # Logging and printing, and does not impact training
 num_prints: 5
@@ -33,9 +33,9 @@ continue_best: false  # continue from best, not last state if continue_from is s
 continue_pretrained: load_from_local  # use either dns48, dns64 or master64 to fine tune from pretrained-model
 restart: false # Ignore existing checkpoints
 checkpoint_file: /home/dadyatlova_1/russian_speech_denoiser/denoiser/from_local/dns48-11decc9d8e3f0998.th
-best_file: best_model_100h.th  # will contain only best model at any point
-history_file: history_100h.json
-samples_dir: samples_100h_april
+best_file: causal_best_model_100h.th  # will contain only best model at any point
+history_file: causal_history_100h.json
+samples_dir: causal_samples_100h_april
 save_again: false  # if true, only load checkpoint and save again, useful to reexport best.th
 
 # Other stuff
@@ -46,7 +46,7 @@ dummy:  # use this if you want twice the same exp, with a different name
 pesq: True # compute pesq?
 eval_every: 10  # compute test metrics every so epochs
 dry: 0.  # dry/wet knob value at eval
-streaming: False  # use streaming evaluation for Demucs
+streaming: True  # use streaming evaluation for Demucs
 
 # Optimization related
 optim: adam
