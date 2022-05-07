@@ -18,29 +18,29 @@ revecho: 0.  # add reverb like augment
 
 # Logging and printing, and does not impact training
 num_prints: 5
-device: cuda
+device: cpu
 num_workers: 1
 verbose: 0
 show: 0   # just show the model and its size and exit
 
 # Checkpointing, by default automatically load last checkpoint
 checkpoint: true
-continue_from: /home/dadyatlova_1/russian_speech_denoiser/denoiser/from_local/dns48-11decc9d8e3f0998.th
+continue_from: /home/dadyatlova_1/russian_speech_denoiser/denoiser/outputs/no_reverb_50/causal_best_model_100h.th
                   # Path the a checkpoint.th file to start from.
                   # this is not used in the name of the experiment!
                   # so use a dummy=something not to mixup experiments.
-continue_best: false  # continue from best, not last state if continue_from is set.
-continue_pretrained: load_from_local  # use either dns48, dns64 or master64 to fine tune from pretrained-model
+continue_best: true  # continue from best, not last state if continue_from is set.
+continue_pretrained: # use either dns48, dns64 or master64 to fine tune from pretrained-model
 restart: false # Ignore existing checkpoints
-checkpoint_file: /home/dadyatlova_1/russian_speech_denoiser/denoiser/from_local/dns48-11decc9d8e3f0998.th
-best_file: causal_best_model_100h.th  # will contain only best model at any point
-history_file: causal_history_100h.json
-samples_dir: causal_samples_100h_april
+checkpoint_file: causal_best_model_100h.th
+best_file: launch2_streaming.th  # will contain only best model at any point
+history_file: launch2_streaming.json
+samples_dir: launch2_streaming.th
 save_again: false  # if true, only load checkpoint and save again, useful to reexport best.th
 
 # Other stuff
 seed: 2036
-dummy:  # use this if you want twice the same exp, with a different name
+dummy: test_launch # use this if you want twice the same exp, with a different name
 
 # Evaluation stuff
 pesq: True # compute pesq?
@@ -56,7 +56,7 @@ loss: l1
 stft_loss: True
 stft_sc_factor: .5
 stft_mag_factor: .5
-epochs: 100
+epochs: 30
 batch_size: 64
 
 # Models
@@ -89,7 +89,7 @@ world_size:
 # Hydra config
 hydra:
   run:
-    dir: ./outputs/april_100${hydra.job.override_dirname}
+    dir: ./outputs/pretrained_continue${hydra.job.override_dirname}
   job:
     config:
       # configuration for the ${hydra.job.override_dirname} runtime variable
