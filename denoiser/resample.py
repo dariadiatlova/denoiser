@@ -6,7 +6,8 @@
 # author: adefossez
 
 import math
-
+import numpy as np
+import torch
 import torch as th
 from torch.nn import functional as F
 
@@ -23,7 +24,8 @@ def kernel_upsample2(zeros=56):
     """kernel_upsample2.
 
     """
-    win = th.hann_window(4 * zeros + 1, periodic=False)
+    # win = th.hann_window(4 * zeros + 1, periodic=False)
+    win = torch.from_numpy(np.hanning(4 * zeros + 1))
     winodd = win[1::2]
     t = th.linspace(-zeros + 0.5, zeros - 0.5, 2 * zeros)
     t *= math.pi
@@ -49,7 +51,8 @@ def kernel_downsample2(zeros=56):
     """kernel_downsample2.
 
     """
-    win = th.hann_window(4 * zeros + 1, periodic=False)
+    # win = th.hann_window(4 * zeros + 1, periodic=False)
+    win = torch.from_numpy(np.hanning(4 * zeros + 1))
     winodd = win[1::2]
     t = th.linspace(-zeros + 0.5, zeros - 0.5, 2 * zeros)
     t.mul_(math.pi)
