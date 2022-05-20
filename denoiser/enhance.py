@@ -79,9 +79,7 @@ def save_wavs(estimates, noisy_sigs, filenames, out_dir, sr=16_000):
 
 def write(wav, filename, sr=16_000):
     # Normalize audio if it prevents clipping
-    print(wav.shape)
-    wav = wav / max(wav.abs().max(dim=-1).item(), 1)
-    print(wav.shape)
+    wav = wav / max(wav.abs().max().item(), 1)
     torchaudio.save(filename, wav.cpu(), sr)
 
 
@@ -134,7 +132,6 @@ def enhance(args, model=None, local_out_dir=None):
         for data in iterator:
             # Get batch data
             noisy_signals, filenames = data
-            print(noisy_signals.shape)
             noisy_signals = noisy_signals.to(args.device)
             if args.device == 'cpu' and args.num_workers > 1:
                 pendings.append(
