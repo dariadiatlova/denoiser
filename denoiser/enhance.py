@@ -134,6 +134,7 @@ def enhance(args, model=None, local_out_dir=None):
         for data in iterator:
             # Get batch data
             noisy_signals, filenames = data
+            print(noisy_signals.shape)
             noisy_signals = noisy_signals.to(args.device)
             if args.device == 'cpu' and args.num_workers > 1:
                 pendings.append(
